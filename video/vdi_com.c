@@ -98,7 +98,7 @@ int VDI_OpenWorkstation(int apid)
 	tos_version = VDI_ReadTosVersion();
 
 	vdi_workin[0] = Getrez()+2;
-	if ((tos_version>0x300) || VDI_HasCustomVdi()) {
+	if ((tos_version>=0x400) || VDI_HasCustomVdi()) {
 		vdi_workin[0] = 1;
 	}
 	for(i = 1; i < 10; i++)
