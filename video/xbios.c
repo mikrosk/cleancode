@@ -52,22 +52,6 @@ enum {
 	VDO_F30
 };
 
-/* EgetShift() masks */
-#define ES_BANK		0x000f
-#define ES_MODE		0x0700
-#ifndef ES_GRAY
-#define ES_GRAY		0x1000
-#define ES_SMEAR	0x8000
-#endif
-
-/* ST/TT shifter modes */
-#define ST_LOW	0x0000
-#define ST_MED	0x0100
-#define ST_HIGH	0x0200
-#define TT_LOW	0x0700
-#define TT_MED	0x0300
-#define TT_HIGH	0x0600
-
 enum {
 	BPP1=0,
 	BPP2,

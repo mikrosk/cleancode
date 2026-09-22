@@ -23,8 +23,6 @@
 
 /*--- Defines ---*/
 
-#define C_SCPN 0x5343504EL
-
 #define SCPN_DEV_1BPP	0
 #define SCPN_DEV_2BPP	1
 #define SCPN_DEV_4BPP	2

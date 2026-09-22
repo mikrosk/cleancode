@@ -61,9 +61,6 @@
 #define MASTERPREDIV_FALCON	256
 #define MASTERPREDIV_MILAN	256
 
-/* Cookies */
-#define C_MgSn	0x4d67536eL	/* MagicMac sound driver (Didier Mequignon) */
-
 /* _MCH cookie (values>>16) */
 enum {
 	MCH_ST=0,
