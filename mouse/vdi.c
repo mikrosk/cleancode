@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 
 	unsigned short prev_mousex, prev_mousey, prev_mouseb;
 
-	short work_in[12], work_out[272];
+	short work_in[11], work_out[272];
 	short apid, vdi_handle, dummy;
 
 	void *dummy_p;	

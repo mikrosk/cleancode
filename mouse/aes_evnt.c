@@ -30,7 +30,7 @@
 
 /*--- Variables ---*/
 
-short work_in[12], work_out[272];
+short work_in[11], work_out[272];
 short vdihandle;
 int vdiwidth, vdiheight, vdibpp;
 short deskx, desky, deskw, deskh;

@@ -34,7 +34,7 @@
 /*--- Variables ---*/
 
 /* One word more than the 272 documented: enhancer.prg overwrites it in vq_scrninfo() */
-short vdi_workin[12], vdi_workout[273];
+short vdi_workin[11], vdi_workout[273];
 short vdi_handle;
 
 /* Hardware -> vdi palette mapping */
