@@ -71,7 +71,6 @@ int main(int argc, char **argv)
 		
 	} else {
 		vdi_handle = graf_handle(&dummy, &dummy, &dummy, &dummy);
-		appl_exit();
 
 		/* Open virtual workstation */
 		v_opnvwk(work_in, &vdi_handle, work_out);
@@ -130,6 +129,7 @@ int main(int argc, char **argv)
 		v_clswk(vdi_handle);
 	} else {
 		v_clsvwk(vdi_handle);
+		appl_exit();
 	}
 
 	return 0;
