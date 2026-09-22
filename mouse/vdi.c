@@ -50,8 +50,7 @@ int main(int argc, char **argv)
 	prev_mousex = prev_mousey = prev_mouseb = 0;
 
 	/* For VDI open workstation */
-	work_in[0]=Getrez()+2;
-	for(i = 1; i < 10; i++)
+	for(i = 0; i < 10; i++)
 		work_in[i] = 1;
 	work_in[10] = 2;
 

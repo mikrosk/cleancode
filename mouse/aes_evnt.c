@@ -23,7 +23,6 @@
 #include <string.h>
 
 #include <gem.h>
-#include <mint/osbind.h>
 
 /*--- Defines ---*/
 
@@ -165,8 +164,7 @@ int OpenWorkstation(void)
 	}
 
 	/* Open virtual VDI workstation */
-	work_in[0]=Getrez()+2;
-	for(i = 1; i < 10; i++)
+	for(i = 0; i < 10; i++)
 		work_in[i] = 1;
 	work_in[10] = 2;
 
