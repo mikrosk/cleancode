@@ -71,9 +71,22 @@ int main(int argc, char **argv)
 		
 	} else {
 		vdi_handle = graf_handle(&dummy, &dummy, &dummy, &dummy);
+		if (vdi_handle < 1) {
+			printf("Wrong VDI handle %d returned by AES\n", vdi_handle);
+			appl_exit();
+			return 1;
+		}
 
 		/* Open virtual workstation */
 		v_opnvwk(work_in, &vdi_handle, work_out);
+	}
+
+	if (vdi_handle == 0) {
+		printf("Can not open VDI workstation\n");
+		if (apid != -1) {
+			appl_exit();
+		}
+		return 1;
 	}
 
 	/* Install our vectors */
