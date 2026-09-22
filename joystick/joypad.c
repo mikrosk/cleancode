@@ -276,7 +276,7 @@ void detect_teamtap(int num_port)
 		if (jp_joypads[num_port*4+i] && (jp_joypads[num_port*4]==0)) {
 			has_teamtap[num_port] = TEAMTAP_YES;
 
-			printf("Port %d has teamtap: true\n");
+			printf("Port %d has teamtap: true\n", num_port);
 			return;
 		}
 	}
