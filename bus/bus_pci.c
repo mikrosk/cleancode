@@ -143,9 +143,9 @@ void DemoPciLoop(void)
 					fprintf(output_handle, "PAK/Panther 2\n");
 					break;
 			}
-			fprintf(output_handle, " Machine serial number: 0x%06x\n",serialnumber);
+			fprintf(output_handle, " Machine serial number: 0x%06lx\n",serialnumber);
 		} else {
-			fprintf(output_handle, "Unknown: 0x%08x\n", machineid);
+			fprintf(output_handle, "Unknown: 0x%08lx\n", machineid);
 		}
 	} else {
 		fprintf(output_handle, "Error reading value\n");
@@ -179,7 +179,7 @@ void DemoPciLoop(void)
 				if (result<0) {
 					fprintf(output_handle, " -- -- -- --");
 				} else {
-					fprintf(output_handle, " %02x %02x %02x %02x",
+					fprintf(output_handle, " %02lx %02lx %02lx %02lx",
 						value & 0xff, (value>>8) & 0xff,
 						(value>>16) & 0xff, (value>>24) & 0xff);
 				}
@@ -221,7 +221,7 @@ void DemoPciLoop(void)
 		classcode=device_config.classcode[2]<<16;
 		classcode|=device_config.classcode[1]<<8;
 		classcode|=device_config.classcode[0];
-		fprintf(output_handle, " Classcode: 0x%06x\n",classcode);
+		fprintf(output_handle, " Classcode: 0x%06lx\n",classcode);
 
 		classes_read= pci_class_getname(
 			classcode,
@@ -286,7 +286,7 @@ void DemoPciLoop(void)
 
 				address = GET_LE_LONG_S(device_config.pci_config_header.header0,rom_address);
 				if (address!=0) {
-					fprintf(output_handle, "  Expansion ROM at 0x%08x\n", address & PCI_BASE_ADDRESS_MEM_MASK);
+					fprintf(output_handle, "  Expansion ROM at 0x%08lx\n", address & PCI_BASE_ADDRESS_MEM_MASK);
 					if (dump_pci_bios) {
 						dump_card_bios(device_handle, address & PCI_BASE_ADDRESS_MEM_MASK);
 					}
@@ -319,7 +319,7 @@ void DemoPciLoop(void)
 
 				address = GET_LE_LONG_S(device_config.pci_config_header.header1, rom_address);
 				if (address!=0) {
-					fprintf(output_handle, "  Expansion ROM at 0x%08x\n", address & PCI_BASE_ADDRESS_MEM_MASK);
+					fprintf(output_handle, "  Expansion ROM at 0x%08lx\n", address & PCI_BASE_ADDRESS_MEM_MASK);
 					if (dump_pci_bios) {
 						dump_card_bios(device_handle, address & PCI_BASE_ADDRESS_MEM_MASK);
 					}
@@ -474,7 +474,7 @@ int print_bar(long device_handle, int num_bar, unsigned long *bar_list)
 		}
 
 		if (num_bits==64) {
-			fprintf(output_handle, "0x%08x", LE_LONG(bar_list[num_bar+1]));
+			fprintf(output_handle, "0x%08lx", LE_LONG(bar_list[num_bar+1]));
 		}
 
 		address &= PCI_BASE_ADDRESS_MEM_MASK;
@@ -484,7 +484,7 @@ int print_bar(long device_handle, int num_bar, unsigned long *bar_list)
 		address &= PCI_BASE_ADDRESS_IO_MASK;
 	}
 
-	fprintf(output_handle, "%s%08x [%4d %cB] %s, %d bits, %s\n",
+	fprintf(output_handle, "%s%08lx [%4ld %cB] %s, %d bits, %s\n",
 		(num_bits==64 ? "" : "0x"),
 		address,
 		(size<1<<10 ? size :
@@ -518,10 +518,10 @@ void dump_card_bios(long device_handle, unsigned long bar_ptr)
 			(ressource->flags & PCIBIOS_RSC_IO ? "I/O" :
 				(ressource->flags & PCIBIOS_RSC_ROM ? "ROM" : "MEM")
 			));
-		fprintf(output_handle, " Start : 0x%08x\n", ressource->start);
-		fprintf(output_handle, " Length: %d\n", ressource->length);
-		fprintf(output_handle, " Offset: 0x%08x\n", ressource->offset);
-		fprintf(output_handle, " DMA offset: 0x%08x\n", ressource->dma_offset);
+		fprintf(output_handle, " Start : 0x%08lx\n", ressource->start);
+		fprintf(output_handle, " Length: %ld\n", ressource->length);
+		fprintf(output_handle, " Offset: 0x%08lx\n", ressource->offset);
+		fprintf(output_handle, " DMA offset: 0x%08lx\n", ressource->dma_offset);
 
 		if (ressource->length < 1<<20) {
 			if ((ressource->flags & PCIBIOS_RSC_ROM) /*|| (bar_ptr == ressource->start)*/) {

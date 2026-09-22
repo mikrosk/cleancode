@@ -346,8 +346,8 @@ long CalibrateExternalClock(int check_dsp)
 	Unlocksnd();
 	Mfree(buffer);
 
-	fprintf(output_handle, "  Time: %d ms\n",CalibSystemTic-CurSystemTic);
-	fprintf(output_handle, "  Replay frequency: %d Hz\n",(LENGTH_CALIB*1000*100)/(CalibSystemTic-CurSystemTic));
+	fprintf(output_handle, "  Time: %ld ms\n",CalibSystemTic-CurSystemTic);
+	fprintf(output_handle, "  Replay frequency: %ld Hz\n",(LENGTH_CALIB*1000*100)/(CalibSystemTic-CurSystemTic));
 	LengthTic1 = (LENGTH_CALIB*1000*100)/CALIB_FREQ1;
 	LengthTic2 = (LENGTH_CALIB*1000*100)/CALIB_FREQ2;
 
@@ -375,18 +375,18 @@ void DisplayInfos_SND(void)
 		case MCH_STE:
 			masterclock = MASTERCLOCK_STE;
 			masterclock_prediv = MASTERPREDIV_STE;
-			fprintf(output_handle, " Master clock = %d Hz\n ", masterclock);
+			fprintf(output_handle, " Master clock = %ld Hz\n ", masterclock);
 			for (i=0;i<4;i++) {
-				fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*(1<<i)));
+				fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*(1<<i)));
 			}
 			fprintf(output_handle, "\n");
 			break;
 		case MCH_TT:
 			masterclock = MASTERCLOCK_TT;
 			masterclock_prediv = MASTERPREDIV_TT;
-			fprintf(output_handle, " Master clock = %d Hz\n ", masterclock);
+			fprintf(output_handle, " Master clock = %ld Hz\n ", masterclock);
 			for (i=0;i<4;i++) {
-				fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*(1<<i)));
+				fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*(1<<i)));
 			}
 			fprintf(output_handle, "\n");
 			break;
@@ -400,7 +400,7 @@ void DisplayInfos_SND(void)
 					if ((curfreq & 3)==0) {
 						fprintf(output_handle, "  ");
 					}
-					fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*(i+1)));
+					fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*(i+1)));
 					if ((curfreq & 3)==3) {
 						fprintf(output_handle, "\n");
 					}
@@ -415,13 +415,13 @@ void DisplayInfos_SND(void)
 
 			masterclock=CalibrateExternalClock(1);
 			if (masterclock>0) {
-				fprintf(output_handle, " External clock selected: %d\n", masterclock);
+				fprintf(output_handle, " External clock selected: %ld\n", masterclock);
 				for (i=1;i<12;i++) {
 					if ((i!=6) && (i!=8) && (i!=10)) {
 						if ((curfreq & 3)==0) {
 							fprintf(output_handle, "  ");
 						}
-						fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*(i+1)));
+						fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*(i+1)));
 						if ((curfreq & 3)==3) {
 							fprintf(output_handle, "\n");
 						}
@@ -474,13 +474,13 @@ void DisplayInfosSTFA(void)
 	switch(cookie_mch>>16) {
 		case MCH_ST:
 			masterclock = MASTERCLOCK_MFP;
-			fprintf(output_handle, " Master clock = %d Hz\n", masterclock);
+			fprintf(output_handle, " Master clock = %ld Hz\n", masterclock);
 			for (i=0;i<16;i++,curfreq++) {
 				if ((curfreq & 3)==0) {
 					fprintf(output_handle, " ");
 				}
 				masterclock_prediv = freqtables[i].prediv;
-				fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*freqtables[i].count));
+				fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*freqtables[i].count));
 				if ((curfreq & 3)==3) {
 					fprintf(output_handle, "\n");
 				}
@@ -494,9 +494,9 @@ void DisplayInfosSTFA(void)
 		case MCH_STE:
 			masterclock = MASTERCLOCK_STE;
 			masterclock_prediv = MASTERPREDIV_STE;
-			fprintf(output_handle, " Master clock = %d Hz\n ", masterclock);
+			fprintf(output_handle, " Master clock = %ld Hz\n ", masterclock);
 			for (i=0;i<4;i++,curfreq++) {
-				fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*(1<<i)));
+				fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*(1<<i)));
 			}
 			fprintf(output_handle, "\nSample formats:\n");
 			fprintf(output_handle, " Signed samples only (-n..+n)\n");
@@ -505,9 +505,9 @@ void DisplayInfosSTFA(void)
 		case MCH_TT:
 			masterclock = MASTERCLOCK_TT;
 			masterclock_prediv = MASTERPREDIV_TT;
-			fprintf(output_handle, " Master clock = %d Hz\n ", masterclock);
+			fprintf(output_handle, " Master clock = %ld Hz\n ", masterclock);
 			for (i=0;i<4;i++) {
-				fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*(1<<i)));
+				fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*(1<<i)));
 			}
 			fprintf(output_handle, "\nSample formats:\n");
 			fprintf(output_handle, " Signed samples only (-n..+n)\n");
@@ -571,8 +571,8 @@ void DisplayInfosMilanBlaster(void)
 		if (cookie->pint) {
 			fprintf(output_handle, " Interrupt at end of replay\n");
 		}
-		fprintf(output_handle, " External clock: %d Hz\n",cookie->res1);
-		fprintf(output_handle, " Current replay frequency: %d\n\n",Soundcmd(SETSMPFREQ, 0));
+		fprintf(output_handle, " External clock: %ld Hz\n",cookie->res1);
+		fprintf(output_handle, " Current replay frequency: %ld\n\n",Soundcmd(SETSMPFREQ, 0));
 	}
 
 	fprintf(output_handle, "Available frequencies:\n");
@@ -587,14 +587,14 @@ void DisplayInfosMilanBlaster(void)
 			break;
 	}
 
-	fprintf(output_handle, " Master clock = %d Hz\n", masterclock);
+	fprintf(output_handle, " Master clock = %ld Hz\n", masterclock);
 	curfreq=0;
 	for (i=1;i<12;i++) {
 		if ((i!=6) && (i!=8) && (i!=10)) {
 			if ((curfreq & 3)==0) {
 				fprintf(output_handle, " ");
 			}
-			fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*(i+1)));
+			fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*(i+1)));
 			if ((curfreq & 3)==3) {
 				fprintf(output_handle, "\n");
 			}
@@ -629,16 +629,16 @@ void DisplayInfosGSXB(void)
 		if (cookie->pint) {
 			fprintf(output_handle, " Interrupt at end of replay\n");
 		}
-		fprintf(output_handle, " External clock: %d Hz\n",cookie->res1);
+		fprintf(output_handle, " External clock: %ld Hz\n",cookie->res1);
 		if (cookie->res1 != 0) {
 			masterclock = cookie->res1;
 		}
-		fprintf(output_handle, " Current replay frequency: %d\n\n",Soundcmd(SETSMPFREQ, 0));
+		fprintf(output_handle, " Current replay frequency: %ld\n\n",Soundcmd(SETSMPFREQ, 0));
 	}
 
-	fprintf(output_handle, "GSXB current replay frequency: %d\n",Soundcmd(SETRATE, -1));
+	fprintf(output_handle, "GSXB current replay frequency: %ld\n",Soundcmd(SETRATE, -1));
 	fprintf(output_handle, "Available frequencies:\n");
-	fprintf(output_handle, " Master clock = %d Hz\n", masterclock);
+	fprintf(output_handle, " Master clock = %ld Hz\n", masterclock);
 
 	curfreq=0;
 	for (i=1;i<12;i++) {
@@ -646,7 +646,7 @@ void DisplayInfosGSXB(void)
 			if ((curfreq & 3)==0) {
 				fprintf(output_handle, " ");
 			}
-			fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*(i+1)));
+			fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*(i+1)));
 			if ((curfreq & 3)==3) {
 				fprintf(output_handle, "\n");
 			}
@@ -697,13 +697,13 @@ void DisplayInfosXsound(void)
 	switch(cookie_mch>>16) {
 		case MCH_ST:
 			masterclock = MASTERCLOCK_MFP;
-			fprintf(output_handle, " Master clock = %d Hz\n", masterclock);
+			fprintf(output_handle, " Master clock = %ld Hz\n", masterclock);
 			for (i=0;i<15;i++,curfreq++) {
 				if ((curfreq & 3)==0) {
 					fprintf(output_handle, " ");
 				}
 				masterclock_prediv = freqtables[i].prediv;
-				fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*freqtables[i].count));
+				fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*freqtables[i].count));
 				if ((curfreq & 3)==3) {
 					fprintf(output_handle, "\n");
 				}
@@ -716,9 +716,9 @@ void DisplayInfosXsound(void)
 		case MCH_STE:
 			masterclock = MASTERCLOCK_STE;
 			masterclock_prediv = MASTERPREDIV_STE;
-			fprintf(output_handle, " Master clock = %d Hz\n ", masterclock);
+			fprintf(output_handle, " Master clock = %ld Hz\n ", masterclock);
 			for (i=0;i<4;i++,curfreq++) {
-				fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*(1<<i)));
+				fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*(1<<i)));
 			}
 			fprintf(output_handle, "\nSample formats:\n");
 			fprintf(output_handle, " Signed samples only (-n..+n)\n");
@@ -727,9 +727,9 @@ void DisplayInfosXsound(void)
 		case MCH_TT:
 			masterclock = MASTERCLOCK_TT;
 			masterclock_prediv = MASTERPREDIV_TT;
-			fprintf(output_handle, " Master clock = %d Hz\n ", masterclock);
+			fprintf(output_handle, " Master clock = %ld Hz\n ", masterclock);
 			for (i=0;i<4;i++) {
-				fprintf(output_handle, "%d\t",masterclock/(masterclock_prediv*(1<<i)));
+				fprintf(output_handle, "%ld\t",masterclock/(masterclock_prediv*(1<<i)));
 			}
 			fprintf(output_handle, "\nSample formats:\n");
 			fprintf(output_handle, " Signed samples only (-n..+n)\n");

@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 
 		/* drives */
 		xhdi_drives = XHDrvMap();		
-		fprintf(output_handle, "Drives handled by XHDI: 0x%08x\n ", xhdi_drives);
+		fprintf(output_handle, "Drives handled by XHDI: 0x%08lx\n ", xhdi_drives);
 		for (i=0; i<32; i++) {
 			if (xhdi_drives & (1<<i)) {
 				fprintf(output_handle, "%c", 'A'+i);
@@ -119,7 +119,7 @@ int main(int argc, char **argv)
 			if (major<20) {
 				fprintf(output_handle, "   LUN: %d\n",minor);
 			}
-			fprintf(output_handle, "   Partition start (in sectors): 0x%08x\n",startblock);
+			fprintf(output_handle, "   Partition start (in sectors): 0x%08lx\n",startblock);
 
 			/* Info for this device */
 			if (XHInqTarget(major,minor,&blocksize,&device_flags,name)<0) {
@@ -129,7 +129,7 @@ int main(int argc, char **argv)
 
 			fprintf(output_handle, "  Target infos:\n");
 			fprintf(output_handle, "   Name: %s\n",name);
-			fprintf(output_handle, "   Block size: %d\n",blocksize);
+			fprintf(output_handle, "   Block size: %ld\n",blocksize);
 			fprintf(output_handle, "   Device capabilities:");
 			if (device_flags & (1<<XH_TARGET_STOPPABLE)) {
 				fprintf(output_handle, " stoppable");
@@ -163,9 +163,9 @@ int main(int argc, char **argv)
 				}
 
 				fprintf(output_handle, "  Partition infos:\n");
-				fprintf(output_handle, "   Start (in sectors): 0x%08x\n",startblock);
-				fprintf(output_handle, "   Length (in sectors): 0x%08x\n",partlength);
-				fprintf(output_handle, "   Length (in Mbytes): %d\n",(partlength*blocksize)>>20);
+				fprintf(output_handle, "   Start (in sectors): 0x%08lx\n",startblock);
+				fprintf(output_handle, "   Length (in sectors): 0x%08lx\n",partlength);
+				fprintf(output_handle, "   Length (in Mbytes): %ld\n",(partlength*blocksize)>>20);
 				fprintf(output_handle, "   Type:");
 				if (partid[0]==0) {
 					if (partid[1]=='D') {

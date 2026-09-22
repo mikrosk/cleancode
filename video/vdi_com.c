@@ -226,7 +226,7 @@ void VDI_ReadInfos(framebuffer_t *framebuffer)
 	/* Display our infos */
 	fprintf(output_handle, "Final workstation informations:\n");
 	fprintf(output_handle, " Address=0x%p,",framebuffer->buffer);
-	fprintf(output_handle, " Pitch=%d,",framebuffer->pitch);
+	fprintf(output_handle, " Pitch=%ld,",framebuffer->pitch);
 	fprintf(output_handle, " Format=");
 	switch (framebuffer->format) {
 		case FBFORMAT_BITPLANES:
@@ -246,10 +246,10 @@ void VDI_ReadInfos(framebuffer_t *framebuffer)
 	fprintf(output_handle, " Height=%d,", framebuffer->height);
 	fprintf(output_handle, " Depth=%d\n", framebuffer->bpp);
 	if (framebuffer->bpp>8) {
-		fprintf(output_handle, " A=0x%08x,", framebuffer->amask);
-		fprintf(output_handle, " R=0x%08x,", framebuffer->rmask);
-		fprintf(output_handle, " G=0x%08x,", framebuffer->gmask);
-		fprintf(output_handle, " B=0x%08x\n", framebuffer->bmask);
+		fprintf(output_handle, " A=0x%08lx,", framebuffer->amask);
+		fprintf(output_handle, " R=0x%08lx,", framebuffer->rmask);
+		fprintf(output_handle, " G=0x%08lx,", framebuffer->gmask);
+		fprintf(output_handle, " B=0x%08lx\n", framebuffer->bmask);
 	}
 }
 
@@ -270,7 +270,7 @@ static void VDI_ReadEddiInfos(framebuffer_t *framebuffer)
 
 	vq_scrninfo(vdi_handle, vdi_workout);
 	fprintf(output_handle, "EdDI workstation informations:\n");
-	fprintf(output_handle, " EdDI version %02x.%02x\n",
+	fprintf(output_handle, " EdDI version %02lx.%02lx\n",
 		(EdDI_version>>8) & 0xff,
 		EdDI_version & 0xff
 	);
@@ -294,7 +294,7 @@ static void VDI_ReadEddiInfos(framebuffer_t *framebuffer)
 	clut_type = vdi_workout[1];
 
 	num_bits = vdi_workout[2];
-	fprintf(output_handle, " %d bitplanes,", num_bits);
+	fprintf(output_handle, " %ld bitplanes,", num_bits);
 	memcpy(&num_colours, &vdi_workout[3], sizeof(num_colours));
 	fprintf(output_handle, " %ld colours\n", num_colours);
 
@@ -305,7 +305,7 @@ static void VDI_ReadEddiInfos(framebuffer_t *framebuffer)
 		framebuffer->buffer = (void *) screen_address;
 		fprintf(output_handle, " Address=0x%p,", framebuffer->buffer);
 		framebuffer->pitch = vdi_workout[5];
-		fprintf(output_handle, " Pitch=%d\n", framebuffer->pitch);
+		fprintf(output_handle, " Pitch=%ld\n", framebuffer->pitch);
 
 		bigendian = ((vdi_workout[14] & (1<<7))==0);
 
@@ -393,10 +393,10 @@ static void VDI_ReadEddiInfos(framebuffer_t *framebuffer)
 				fprintf(output_handle, " Little endian,");
 			}
 
-			fprintf(output_handle, " A=0x%08x,", framebuffer->amask);
-			fprintf(output_handle, " R=0x%08x,", framebuffer->rmask);
-			fprintf(output_handle, " G=0x%08x,", framebuffer->gmask);
-			fprintf(output_handle, " B=0x%08x\n", framebuffer->bmask);
+			fprintf(output_handle, " A=0x%08lx,", framebuffer->amask);
+			fprintf(output_handle, " R=0x%08lx,", framebuffer->rmask);
+			fprintf(output_handle, " G=0x%08lx,", framebuffer->gmask);
+			fprintf(output_handle, " B=0x%08lx\n", framebuffer->bmask);
 		}
 	}
 
@@ -557,20 +557,20 @@ static void VDI_ReadEddiInfos(framebuffer_t *framebuffer)
 				} else {
 					fprintf(output_handle, " Little endian,");
 				}
-				fprintf(output_handle, " A=0x%08x,", framebuffer->amask);
-				fprintf(output_handle, " R=0x%08x,", framebuffer->rmask);
-				fprintf(output_handle, " G=0x%08x,", framebuffer->gmask);
-				fprintf(output_handle, " B=0x%08x\n", framebuffer->bmask);
+				fprintf(output_handle, " A=0x%08lx,", framebuffer->amask);
+				fprintf(output_handle, " R=0x%08lx,", framebuffer->rmask);
+				fprintf(output_handle, " G=0x%08lx,", framebuffer->gmask);
+				fprintf(output_handle, " B=0x%08lx\n", framebuffer->bmask);
 
 				new_amask = (0xff>>framebuffer->aloss)<<framebuffer->ashift;
 				new_rmask = (0xff>>framebuffer->rloss)<<framebuffer->rshift;
 				new_gmask = (0xff>>framebuffer->gloss)<<framebuffer->gshift;
 				new_bmask = (0xff>>framebuffer->bloss)<<framebuffer->bshift;
 
-				fprintf(output_handle, " Deduced: A=0x%08x,", new_amask);
-				fprintf(output_handle, " R=0x%08x,", new_rmask);
-				fprintf(output_handle, " G=0x%08x,", new_gmask);
-				fprintf(output_handle, " B=0x%08x\n", new_bmask);
+				fprintf(output_handle, " Deduced: A=0x%08lx,", new_amask);
+				fprintf(output_handle, " R=0x%08lx,", new_rmask);
+				fprintf(output_handle, " G=0x%08lx,", new_gmask);
+				fprintf(output_handle, " B=0x%08lx\n", new_bmask);
 			}
 			break;
 	}
@@ -611,11 +611,11 @@ unsigned long VDI_AllocateIndirectBuffer(framebuffer_t *framebuffer)
 	if (framebuffer->buffer!=NULL) {
 		memset(framebuffer->buffer, 0, screensize);
 	} else {
-		fprintf(stderr, "Could not allocate %d bytes for indirect rendering\n",screensize);
+		fprintf(stderr, "Could not allocate %ld bytes for indirect rendering\n",screensize);
 		screensize = 0;
 	}
 
-	fprintf(output_handle, "%d bytes allocated for indirect rendering\n", screensize);
+	fprintf(output_handle, "%ld bytes allocated for indirect rendering\n", screensize);
 	return screensize;
 }
 

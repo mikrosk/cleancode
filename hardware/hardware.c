@@ -115,7 +115,7 @@ int main(int argc, char **argv)
 		fprintf(output_handle, "non present\n");
 		cookie_cpu = 0;
 	} else {
-		fprintf(output_handle, "present: 0x%08x\n", cookie_cpu);
+		fprintf(output_handle, "present: 0x%08lx\n", cookie_cpu);
 	}
 
 	fprintf(output_handle, " _FPU cookie: ");
@@ -123,7 +123,7 @@ int main(int argc, char **argv)
 		fprintf(output_handle, "non present\n");
 		cookie_fpu = 0;
 	} else {
-		fprintf(output_handle, "present: 0x%08x\n", cookie_fpu);
+		fprintf(output_handle, "present: 0x%08lx\n", cookie_fpu);
 	}
 
 	if (cookie_cpu<=60) {
@@ -275,8 +275,8 @@ void DemoHwLoop(void)
 	curhw=hardware;
 	while (curhw->address != NULL) {
 		if (curhw->present) {
-			fprintf(output_handle, " 0x%08x: %s\n",
-				curhw->address,
+			fprintf(output_handle, " 0x%08lx: %s\n",
+				(unsigned long) curhw->address,
 				curhw->name
 			);
 		}
@@ -288,8 +288,8 @@ void DemoHwLoop(void)
 		curhw=hardware_ct60;
 		while (curhw->address != NULL) {
 			if (curhw->present) {
-				fprintf(output_handle, " 0x%08x: %s\n",
-					curhw->address,
+				fprintf(output_handle, " 0x%08lx: %s\n",
+					(unsigned long) curhw->address,
 					curhw->name
 				);
 			}

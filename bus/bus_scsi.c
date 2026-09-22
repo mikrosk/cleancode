@@ -155,7 +155,7 @@ void ListBusses(void)
 				fprintf(output_handle, " Scatter-gather");
 			}
 		}
-		fprintf(output_handle, "\n  Max tranfer length (in bytes): %d\n", businfo.maxlen);
+		fprintf(output_handle, "\n  Max tranfer length (in bytes): %ld\n", businfo.maxlen);
 
 		ListDevices(businfo.busno);
 
@@ -178,7 +178,7 @@ void ListDevices(unsigned short busno)
 		}
 
 		fprintf(output_handle, "  Device %d:\n", devno);
-		fprintf(output_handle, "   ID: 0x%08x:%08x\n", devinfo.scsi_id.high, devinfo.scsi_id.low);
+		fprintf(output_handle, "   ID: 0x%08lx:%08lx\n", devinfo.scsi_id.high, devinfo.scsi_id.low);
 
 		PrintDeviceInfo(busno, &devinfo.scsi_id);
 
@@ -197,7 +197,7 @@ void PrintDeviceInfo(unsigned short busno, scsi_long64_t *scsi_id)
 
 	result=scsidrv_open(busno, scsi_id, &(device.maxlen));
 	if (result<0) {
-		fprintf(output_handle, "   Can not open device: error=0x%08x\n", result);
+		fprintf(output_handle, "   Can not open device: error=0x%08lx\n", result);
 		return;
 	}
 
@@ -205,7 +205,7 @@ void PrintDeviceInfo(unsigned short busno, scsi_long64_t *scsi_id)
 	device.timeout = 5;
 	device.control = 0;
 
-	fprintf(output_handle, "   Device opened: Handle=0x%04x, Maxlen=%d\n", *(device.handle), device.maxlen);
+	fprintf(output_handle, "   Device opened: Handle=0x%04x, Maxlen=%ld\n", *(device.handle), device.maxlen);
 	
 	for (device.lun=0; device.lun<8; device.lun++) {
 		fprintf(output_handle, "   Lun %d:\n", device.lun);
@@ -215,7 +215,7 @@ void PrintDeviceInfo(unsigned short busno, scsi_long64_t *scsi_id)
 		/* Query infos */
 		result = scsi_Inquiry(&device, &inqdata, sizeof(inqdata), 0, 0);
 		if (result<0) {
-			fprintf(output_handle, "    Can not Inquiry() lun %d: error=0x%08x\n", device.lun, result);
+			fprintf(output_handle, "    Can not Inquiry() lun %d: error=0x%08lx\n", device.lun, result);
 			continue;
 		}
 

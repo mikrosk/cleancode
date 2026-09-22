@@ -470,21 +470,21 @@ void DisplayRawValues(void)
 
 	for (i=0; i<2; i++) {
 		if (prev_raw_lightpens[i] != raw_lightpens[i]) {
-			printf("Lightpen: %c=%d\n", (i==0) ? 'X' : 'Y', raw_lightpens[i]);
+			printf("Lightpen: %c=%ld\n", (i==0) ? 'X' : 'Y', raw_lightpens[i]);
 			prev_raw_lightpens[i] = raw_lightpens[i];
 		}
 	}
 
 	for (i=0; i<4; i++) {
 		if (prev_raw_paddles[i] != raw_paddles[i]) {
-			printf("Paddle %d: %c=%d\n", i>>1, ((i&1)==0) ? 'X' : 'Y', raw_paddles[i]);
+			printf("Paddle %d: %c=%ld\n", i>>1, ((i&1)==0) ? 'X' : 'Y', raw_paddles[i]);
 			prev_raw_paddles[i] = raw_paddles[i];
 		}
 	}
 
 	for (i=0; i<8*8; i++) {
 		if (prev_raw_joypads[i] != raw_joypads[i]) {
-			printf("Joypad %d: %s=0x%04x\n", (i>>3), raw_names[i&7], raw_joypads[i]);
+			printf("Joypad %d: %s=0x%04lx\n", (i>>3), raw_names[i&7], raw_joypads[i]);
 			prev_raw_joypads[i] = raw_joypads[i];
 		}
 	}

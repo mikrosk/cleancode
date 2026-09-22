@@ -86,7 +86,7 @@ static char *load_ids(char *filename, int *length)
 
 	buffer = (char *)malloc(*length);
 	if (buffer==NULL) {
-		fprintf(stderr, "Unable to allocate %d bytes\n", length);
+		fprintf(stderr, "Unable to allocate %n bytes\n", length);
 		return NULL;
 	}
 

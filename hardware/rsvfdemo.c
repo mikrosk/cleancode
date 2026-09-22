@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 		fprintf(output_handle, "non present\n");
 		cookie_rsvf = 0;
 	} else {
-		fprintf(output_handle, "present: 0x%08x\n", cookie_rsvf);
+		fprintf(output_handle, "present: 0x%08lx\n", cookie_rsvf);
 	}
 
 	if (cookie_rsvf) {

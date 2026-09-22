@@ -87,7 +87,7 @@ void ListMetadosDrives(metainit_t *metainit)
 	int handle, i;
 	unsigned char gemdos_dev[32];
 
-	fprintf(output_handle, "List of Metados drives: 0x%08x\n", metainit->drives_map);
+	fprintf(output_handle, "List of Metados drives: 0x%08lx\n", metainit->drives_map);
 
 	memset(gemdos_dev, 0, sizeof(gemdos_dev));
 	for (i=0; i<32; i++) {

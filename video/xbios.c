@@ -280,7 +280,7 @@ void DisplayMonitor(void)
 			fprintf(output_handle, "TV/RGB\n");
 			break;
 		default:
-			fprintf(output_handle, "unknown: _VDO=0x%08x\n",cookie_vdo);
+			fprintf(output_handle, "unknown: _VDO=0x%08lx\n",cookie_vdo);
 			break;
 	}
 }
@@ -682,7 +682,7 @@ void BuildModesListF30ScreenBlaster2(void)
 	}
 
 	errorcode = SB2_GetStatus();
-	fprintf(output_handle, " Enabled: 0x%08x : %s\n", errorcode, errorcode ? "true" : "false");
+	fprintf(output_handle, " Enabled: 0x%08lx : %s\n", errorcode, errorcode ? "true" : "false");
 	if (errorcode == 0) {
 		return;
 	}
@@ -721,7 +721,7 @@ void BuildModesListF30ScreenBlaster2(void)
 		if (mon_suitable & curmode->mon_suitable) {
 
 			fprintf(output_handle, "  Mode %d: %s\n   HFreq=%.1f KHz, VFreq=%.1f Hz, ",
-				i, curmode->name.pointer,
+				i, (char *) curmode->name.pointer->name,
 				((float)curmode->hfreq)/10.0, ((float)curmode->vfreq)/10.0
 			);
 
@@ -792,7 +792,7 @@ unsigned long /*cdecl*/ enumfunc(SCREENINFO *inf, unsigned long flag)
 		framebuffer->format=FBFORMAT_PACKED;
 	}
 
-	fprintf(output_handle, "  Mode %d: %dx%dx%d: Ok\n", mvdi_nummode, inf->scrWidth, inf->scrHeight, inf->scrPlanes);
+	fprintf(output_handle, "  Mode %d: %ldx%ldx%ld: Ok\n", mvdi_nummode, inf->scrWidth, inf->scrHeight, inf->scrPlanes);
 	mvdi_nummode++;
 
 	return ENUMMODE_CONT; 
@@ -810,16 +810,16 @@ void BuildModesListMilan(void)
 	/* Get infos about current mode */
 	fprintf(output_handle, " Current video mode:\n");
 	VsetScreen(-1, &mvdicurmode, MI_MAGIC, CMD_GETMODE);
-	fprintf(output_handle, "  Video mode code: 0x%08x\n", mvdicurmode);
+	fprintf(output_handle, "  Video mode code: 0x%08lx\n", mvdicurmode);
 
 	si.size = sizeof(SCREENINFO);
 	si.devID = mvdicurmode;
 	si.scrFlags = 0;
 	VsetScreen(-1, &si, MI_MAGIC, CMD_GETINFO) ;
 	if (si.scrFlags & SCRINFO_OK) {
-		fprintf(output_handle, "  %dx%dx%d mode selected\n", si.scrWidth, si.scrHeight, si.scrPlanes);
+		fprintf(output_handle, "  %ldx%ldx%ld mode selected\n", si.scrWidth, si.scrHeight, si.scrPlanes);
 	} else {
-		fprintf(output_handle, "  Unable to read infos about current mode: 0x%08x\n", si.scrFlags);
+		fprintf(output_handle, "  Unable to read infos about current mode: 0x%08lx\n", si.scrFlags);
 	}
 
 	/* Add predefined modes, if valid */
@@ -859,8 +859,8 @@ void BuildModesListNova(void)
 /*	fprintf(output_handle, " Version: 0x%08x\n", cur_xcb->version);*/
 	fprintf(output_handle, " Blank time: %d\n", cur_xcb->blnk_time);
 	fprintf(output_handle, " Mouse speed: %d\n", cur_xcb->ms_speed);
-	fprintf(output_handle, " Video RAM base: 0x%08x\n", cur_xcb->scr_base);
-	fprintf(output_handle, " Video RAM size: %d\n", cur_xcb->mem_size);
+	fprintf(output_handle, " Video RAM base: 0x%08lx\n", (unsigned long) cur_xcb->scr_base);
+	fprintf(output_handle, " Video RAM size: %ld\n", cur_xcb->mem_size);
 	fprintf(output_handle, " %d possible screens\n\n", cur_xcb->scrn_cnt);
 
 	/* Display infos about current mode */
