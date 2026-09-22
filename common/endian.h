@@ -18,8 +18,8 @@
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef _ENDIAN_H
-#define _ENDIAN_H
+#ifndef _COMMON_ENDIAN_H
+#define _COMMON_ENDIAN_H
 
 /*--- Defines ---*/
 
@@ -62,4 +62,4 @@
 #define LE_WORD(value) \
 	((((value) & 0xff)<<8)|(((value)>>8) & 0xff))
 
-#endif /* _ENDIAN_H */
+#endif /* _COMMON_ENDIAN_H */
