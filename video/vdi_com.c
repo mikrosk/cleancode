@@ -259,6 +259,7 @@ static void VDI_ReadEddiInfos(framebuffer_t *framebuffer)
 	long cookie_EdDI;
 
 	unsigned long num_colours, num_bits, clut_type, bigendian = 0;
+	unsigned long screen_address;
 
 	/* Read cookie */
 	if  (Getcookie(C_EdDI, &cookie_EdDI) == C_NOTFOUND) {
@@ -294,13 +295,14 @@ static void VDI_ReadEddiInfos(framebuffer_t *framebuffer)
 
 	num_bits = vdi_workout[2];
 	fprintf(output_handle, " %d bitplanes,", num_bits);
-	num_colours = *((unsigned long *) &vdi_workout[3]);
+	memcpy(&num_colours, &vdi_workout[3], sizeof(num_colours));
 	fprintf(output_handle, " %ld colours\n", num_colours);
 
 	if (EdDI_version >= EDDI_11) {
 		fprintf(output_handle, "EdDI 1.1 screen format: 0x%04x\n",vdi_workout[14]);
 
-		framebuffer->buffer = (void *) *((unsigned long *) &vdi_workout[6]);
+		memcpy(&screen_address, &vdi_workout[6], sizeof(screen_address));
+		framebuffer->buffer = (void *) screen_address;
 		fprintf(output_handle, " Address=0x%p,", framebuffer->buffer);
 		framebuffer->pitch = vdi_workout[5];
 		fprintf(output_handle, " Pitch=%d\n", framebuffer->pitch);
