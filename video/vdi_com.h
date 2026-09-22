@@ -25,7 +25,7 @@
 
 /*--- Variables ---*/
 
-extern short vdi_workin[12], vdi_workout[272];
+extern short vdi_workin[12], vdi_workout[273];
 extern short vdi_handle;
 
 /* Hardware -> vdi palette mapping */
