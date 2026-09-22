@@ -55,7 +55,14 @@ int main(int argc, char **argv)
 	work_in[10] = 2;
 
 	/* Ask GEM what workstation it has opened (if any) */
+	/* A failed appl_init() and a missing AES both return -1, */
+	/* only the AES version tells them apart */
+	aes_global[0] = 0;
 	apid = appl_init();
+	if ((apid == -1) && (aes_global[0] != 0)) {
+		printf("Can not open AES\n");
+		return 1;
+	}
 	if (apid == -1) {
 		vdi_handle = -1;
 

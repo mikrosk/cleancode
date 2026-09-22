@@ -61,7 +61,14 @@ int main(int argc, char **argv)
 	}
 
 	/* Ask AES what workstation it has opened (if any) */
+	/* A failed appl_init() and a missing AES both return -1, */
+	/* only the AES version tells them apart */
+	aes_global[0] = 0;
 	my_apid = appl_init();
+	if ((my_apid == -1) && (aes_global[0] != 0)) {
+		fprintf(stderr, "Can not open AES\n");
+		exit(1);
+	}
 	if (VDI_OpenWorkstation(my_apid)==-1) {
 		exit(1);
 	}
